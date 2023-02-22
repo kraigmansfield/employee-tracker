@@ -14,7 +14,6 @@ const db = mysql.createConnection(
     password: 'password',
     database: 'employee_db',
   },
-  console.log(`Connected to the employee_db database.`),
 )
 function runApp() {
 inquirer
@@ -39,16 +38,17 @@ inquirer
     console.log(res.choicesMain)
     switch (res.choicesMain) {
       case 'View All Departments':
-        allEmployees();
-
+        allDepartments();
+        
         break
 
       case 'View All Roles':
-        //TODO: ADD function
+        allRoles();
         break
 
       case 'View All Employees':
-        //TODO: ADD function
+        allEmployees();
+        
         break
 
       case 'Add a Department':
@@ -56,7 +56,8 @@ inquirer
         break
 
       case 'Add a Role':
-        //TODO: ADD function
+        
+        
         break
 
       case 'Add An Employee':
@@ -77,29 +78,38 @@ inquirer
   })
 
 function allEmployees() {
-  var allEmployeesContainer = []
-  var query =
-  db.query(query, function (err, result) {
-    if (err) throw err
-
-    let employeeArray = []
-    for (let i = 0; i < result.length; i++) {
-      employeeArray = []
-
-      employeeArray.push(result[i].id)
-      employeeArray.push(result[i].first_name)
-      employeeArray.push(result[i].last_name)
-      employeeArray.push(result[i].title)
-      employeeArray.push(result[i].salary)
-      employeeArray.push(result[i].department_name)
-
-      allEmployeesContainer.push(employeeArray)
-    }
-
-    
-    promptQuit()
+  console.log("All Employees");
+  let query = `SELECT * FROM employee`;
+  db.query(query, function (err,res) {
+    if (err) throw err;
+    let employeeArray = [];
+    res.forEach(employee => employeeArray.push(employee));
+    console.table(employeeArray);
   })
 }}
+
+function allDepartments() {
+  console.log("All Departments");
+  let query = `SELECT * FROM department`;
+  db.query(query, function (err,res) {
+    if (err) throw err;
+    let departmentArray = [];
+    res.forEach(department => departmentArray.push(department));
+    console.table(departmentArray);
+  })
+}
+
+function allRoles() {
+  console.log("All Roles");
+  let query = `SELECT * FROM role`;
+  db.query(query, function (err,res) {
+    if (err) throw err;
+    let roleArray = [];
+    res.forEach(role => roleArray.push(role));
+    console.table(roleArray);
+  })
+}
+
 
 function promptQuit() {
   inquirer
@@ -113,7 +123,7 @@ function promptQuit() {
       if (answer.promptQuit === 'Run Again') {
         runApp();
       } else {
-        connection.end()
+        db.end();
       }
     })
 }
