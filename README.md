@@ -15,6 +15,9 @@ npm console.table - to format tables
 
 node index.js to run application
 
+## Walkthrough Video
+https://www.youtube.com/watch?v=WQWfyNGYqHs
+
 
 ## How to Use The Project
 Users are presented with a list of options where they are able to select from. Once selected, the user is shown desired data. The user is also able to add their own data to the application.
