@@ -1,13 +1,12 @@
 const mysql = require('mysql2')
 const express = require('express')
 const inquirer = require('inquirer')
-const {query} = require('express')
 
 const PORT = process.env.PORT || 3000
-require('console.table')
+const consoleTable = require('console.table')
 const app = express();
 
-const connection = mysql.createConnection(
+const db = mysql.createConnection(
   {
     host: 'localhost',
     port: '3306',
@@ -40,8 +39,8 @@ inquirer
     console.log(res.choicesMain)
     switch (res.choicesMain) {
       case 'View All Departments':
-        //TODO: ADD function
-        allEmployees()
+        allEmployees();
+
         break
 
       case 'View All Roles':
@@ -69,7 +68,7 @@ inquirer
         break
 
       case 'Exit':
-        //TODO: ADD function
+        promptQuit();
         break
     }
   })
@@ -78,9 +77,9 @@ inquirer
   })
 
 function allEmployees() {
-  var allEmployees = []
+  var allEmployeesContainer = []
   var query =
-  connection.query(query, function (err, result) {
+  db.query(query, function (err, result) {
     if (err) throw err
 
     let employeeArray = []
@@ -94,7 +93,7 @@ function allEmployees() {
       employeeArray.push(result[i].salary)
       employeeArray.push(result[i].department_name)
 
-      allEmployees.push(employeeArray)
+      allEmployeesContainer.push(employeeArray)
     }
 
     
