@@ -4,7 +4,7 @@ VALUES
 ('Assistants'), 
 ('Office Administrator');
 
-INSERT INTO role (title,salary,department_id)
+INSERT INTO roles (title,salary,department_id)
 VALUES
 ("Deputy Director", 100000, 1),
 ("Parks Director", 150000, 1),
@@ -12,7 +12,7 @@ VALUES
 ("Assistant", 60000, 2),
 ("Administrator", 75000, 3);
 
-INSERT INTO employee (first_name,last_name,role_id,manager_id)
+INSERT INTO employee (first_name,last_name,roles_id,manager_id)
 VALUES
 ("Leslie", "Knope", 1, 1),
 ("Ron", "Swanson", 2, 1),

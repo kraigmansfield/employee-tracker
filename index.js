@@ -39,7 +39,6 @@ inquirer
     switch (res.choicesMain) {
       case 'View All Departments':
         allDepartments();
-        
         break
 
       case 'View All Roles':
@@ -79,12 +78,17 @@ inquirer
 
 function allEmployees() {
   console.log("All Employees");
-  let query = `SELECT * FROM employee`;
+  let query = `SELECT employee.id, first_name, last_name, title, salary, department_name 
+  FROM employee 
+  JOIN roles 
+  ON (roles_id = roles.id) 
+  JOIN department ON (department.id = roles.department_id)`;
   db.query(query, function (err,res) {
     if (err) throw err;
     let employeeArray = [];
     res.forEach(employee => employeeArray.push(employee));
     console.table(employeeArray);
+    runApp();
   })
 }}
 
@@ -96,17 +100,19 @@ function allDepartments() {
     let departmentArray = [];
     res.forEach(department => departmentArray.push(department));
     console.table(departmentArray);
+    runApp();
   })
 }
 
 function allRoles() {
   console.log("All Roles");
-  let query = `SELECT * FROM role`;
+  let query = `SELECT id,title,salary FROM roles`;
   db.query(query, function (err,res) {
     if (err) throw err;
-    let roleArray = [];
-    res.forEach(role => roleArray.push(role));
-    console.table(roleArray);
+    let rolesArray = [];
+    res.forEach(roles => rolesArray.push(roles));
+    console.table(rolesArray);
+    runApp();
   })
 }
 
